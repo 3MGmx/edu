@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Biblioteca</title>
+    <link rel="stylesheet" href="C:\xampp\htdocs\MGMM\Proyecto\estilos.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Mi Biblioteca</h1>
+
+        <!-- Formulario para agregar libros -->
+        <form id="bookForm">
+            <input type="text" id="title" placeholder="Título del libro" required>
+            <input type="text" id="author" placeholder="Autor del libro" required>
+            <textarea id="description" placeholder="Descripción del libro" required></textarea>
+            <input type="file" id="pdfFile" accept="application/pdf" required>
+            <button type="button" onclick="addBook()">Agregar Libro</button>
+        </form>
+
+        <!-- Área donde se mostrarán los libros añadidos -->
+        <div class="library" id="library">
+            <h2>Libros en la Biblioteca:</h2>
+            <!-- Los libros se mostrarán aquí -->
+        </div>
+    </div>
+
+    <!-- Aquí irá el código JavaScript -->
+    <script>
+        function addBook() {
+            // Obtener los valores del formulario
+            const title = document.getElementById("title").value;
+            const author = document.getElementById("author").value;
+            const description = document.getElementById("description").value;
+            const pdfFile = document.getElementById("pdfFile").files[0];
+    
+            // Validar que los campos no estén vacíos
+            if (title.trim() === "" || author.trim() === "" || description.trim() === "" || !pdfFile) {
+                alert("Por favor, completa todos los campos y selecciona un archivo PDF.");
+                return;
+            }
+    
+            // Crear un nuevo elemento para el libro
+            const bookDiv = document.createElement("div");
+            bookDiv.classList.add("book");
+    
+            // Crear un enlace para el archivo PDF
+            const pdfLink = document.createElement("a");
+            pdfLink.href = URL.createObjectURL(pdfFile);
+            pdfLink.textContent = "Ver PDF";
+            pdfLink.target = "_blank";
+    
+            bookDiv.innerHTML = `
+                <h3>${title}</h3>
+                <p><strong>Autor:</strong> ${author}</p>
+                <p><strong>Descripción:</strong> ${description}</p>
+            `;
+            bookDiv.appendChild(pdfLink);
+    
+            // Agregar el libro a la biblioteca
+            document.getElementById("library").appendChild(bookDiv);
+    
+            // Limpiar el formulario
+            document.getElementById("title").value = "";
+            document.getElementById("author").value = "";
+            document.getElementById("description").value = "";
+            document.getElementById("pdfFile").value = "";
+        }
+    </script>
+</body>
+</html>
